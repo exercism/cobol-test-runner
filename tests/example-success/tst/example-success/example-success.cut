@@ -1,0 +1,4 @@
+TESTSUITE 'Testsuite example-success'
+
+TestCase "fail 1"
+	EXPECT WS-RESULT = "TRUE"

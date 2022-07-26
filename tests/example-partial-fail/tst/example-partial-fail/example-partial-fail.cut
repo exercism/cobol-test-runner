@@ -1,0 +1,7 @@
+TESTSUITE 'Testsuite example-partial-fail'
+
+TestCase "fail"
+	EXPECT WS-RESULT = "TRUE"
+
+TestCase "fail"
+	EXPECT WS-RESULT = "FALSE"

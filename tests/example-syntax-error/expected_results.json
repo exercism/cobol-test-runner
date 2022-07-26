@@ -1,5 +1,5 @@
 {
   "version": 1,
   "status": "fail",
-  "message": "TODO: replace with correct output"
+  "message": "test.cob:133: error: invalid indicator 's' at column 7"
 }

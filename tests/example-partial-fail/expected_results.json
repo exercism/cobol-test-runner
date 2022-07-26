@@ -1,5 +1,5 @@
 {
   "version": 1,
   "status": "fail",
-  "message": "TODO: replace with correct output"
+  "message": "TESTSUITE:\nTestsuite example-partial-fail\n     PASS:   1. fail                                                                            \n**** FAIL:   2. fail                                                                            \n    EXPECTED <FALSE>, WAS <TRUE>\n \n  2 TEST CASES WERE EXECUTED\n  1 PASSED\n  1 FAILED\n================================================="
 }
