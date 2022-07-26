@@ -44,7 +44,12 @@ else
     # OPTIONAL: Sanitize the output
     # In some cases, the test output might be overly verbose, in which case stripping
     # the unneeded information can be very helpful to the student
-    sanitized_test_output=$(printf "${test_output}" | sed '1,/^COMPILE AND RUN TEST$/d' | sed '/warning: ignoring redundant \. \[-Wothers\]/ d' | sed '/test.cob: in paragraph .\(UT-BEFORE-EACH\|UT-AFTER-EACH\|UT-LOOKUP-FILE\|UT-BEFORE\)./ d' )
+    printf "${test_output}" | grep "COMPILE AND RUN TEST" 2>&1 1>/dev/null
+    if [ $? -eq 0 ]; then
+        sanitized_test_output=$(printf "${test_output}" | sed '1,/^COMPILE AND RUN TEST$/d' | sed '/warning: ignoring redundant \. \[-Wothers\]/ d' | sed '/test.cob: in paragraph .\(UT-BEFORE-EACH\|UT-AFTER-EACH\|UT-LOOKUP-FILE\|UT-BEFORE\)./ d' )
+    else
+        sanitized_test_output="${test_output} $(printf " \nSOMETHING WENT WRONG DURING TEST SETUP, PLEASE OPEN A TICKET AT: https://github.com/exercism/cobol/issues/new")"
+    fi
 
     # OPTIONAL: Manually add colors to the output to help scanning the output for errors
     # If the test output does not contain colors to help identify failing (or passing)
