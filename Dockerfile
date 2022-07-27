@@ -4,7 +4,7 @@ RUN apk add --no-cache curl coreutils bash
 WORKDIR /bin/
 RUN /bin/fetch-cobolcheck 
 
-FROM ubuntu:22.04
+FROM ubuntu:focal
 
 # TODO: install packages required to run the tests
 RUN apt-get update && apt-get install -y \
