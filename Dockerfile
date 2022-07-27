@@ -1,7 +1,18 @@
-FROM alpine:3.10
+FROM alpine AS download
+COPY bin/fetch-cobolcheck /bin/
+RUN apk add --no-cache curl coreutils bash
+WORKDIR /bin/
+RUN /bin/fetch-cobolcheck 
+
+FROM ubuntu:22.04
 
 # TODO: install packages required to run the tests
-# RUN apk add --no-cache jq coreutils
+RUN apt-get update && apt-get install -y \
+    jq \
+    gnucobol \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=download /bin/cobolcheck /bin/cobolcheck
 
 WORKDIR /opt/test-runner
 COPY . .

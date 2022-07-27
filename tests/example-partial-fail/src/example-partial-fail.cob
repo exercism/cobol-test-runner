@@ -1,0 +1,6 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. example-partial-fail.
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01 WS-RESULT PIC X(4) VALUE 'TRUE'.
+       PROCEDURE DIVISION.
