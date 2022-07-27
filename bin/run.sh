@@ -34,7 +34,7 @@ echo "${slug}: testing..."
 # Run the tests for the provided implementation file and redirect stdout and
 # stderr to capture it
 # TODO: Replace 'RUN_TESTS_COMMAND' with the command to run the tests
-test_output=$(${solution_dir}/test.sh ${slug} 2>&1)
+test_output=$(bash ${solution_dir}/test.sh ${slug} 2>&1)
 
 # Write the results.json file based on the exit code of the command that was 
 # just executed that tested the implementation file
