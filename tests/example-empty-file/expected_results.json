@@ -1,5 +1,5 @@
 {
   "version": 1,
   "status": "fail",
-  "message": "test.cob:1: error: PROGRAM-ID header missing"
+  "message": "test.cob:1: error: PROGRAM-ID header missing\n    1 > <EOF>"
 }
