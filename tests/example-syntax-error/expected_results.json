@@ -1,5 +1,5 @@
 {
   "version": 1,
   "status": "fail",
-  "message": "test.cob:133: error: invalid indicator 's' at column 7"
+  "message": "test.cob:133: error: invalid indicator 's' at column 7\n  131 | ..\n  132 |       * CCHECKWS.CPY END..\n  133 >       s not cobol syntax!!!..\n  134 |        PROCEDURE DIVISION...\n  135 |            PERFORM UT-INITIALIZE.."
 }
