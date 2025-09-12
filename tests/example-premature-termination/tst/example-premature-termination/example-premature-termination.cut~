@@ -1,0 +1,5 @@
+TESTSUITE 'Testsuite example-premature-termination'
+
+TestCase "fail 1"
+        PERFORM DO-SOMETHING
+	EXPECT WS-RESULT = "FAIL"
