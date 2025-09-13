@@ -3,3 +3,4 @@ tests/*/ALLTESTS
 tests/*/ParserErrorLog.txt
 tests/*/test
 tests/*/test.cob
+*~
