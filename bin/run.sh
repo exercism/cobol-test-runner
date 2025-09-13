@@ -39,7 +39,7 @@ test_output=$(bash ${solution_dir}/test.sh ${slug} 2>&1)
 # Write the results.json file based on the exit code of the command that was 
 # just executed that tested the implementation file
 if [ $? -eq 0 ]; then
-    if echo "$test_output" | tail -4 | grep -Pz '^ *[[:digit:]]+ TEST CASES WERE EXECUTED\n *[[:digit:]]+ PASSED\n *[[:digit:]]+ FAILED\n={49}' 2>&1 1>/dev/null; then
+    if echo "$test_output" | tail -4 | grep -qPz '^ *[[:digit:]]+ TEST CASES WERE EXECUTED\n *[[:digit:]]+ PASSED\n *[[:digit:]]+ FAILED\n={49}'; then
         jq -n '{version: 1, status: "pass"}' > ${results_file}
     else
         sanitized_test_output=$(printf "${test_output}" | sed '1,/^COMPILE AND RUN TEST$/d' | sed '/warning: ignoring redundant \. \[-Wothers\]/ d' | sed '/test.cob: in paragraph .\(UT-BEFORE-EACH\|UT-AFTER-EACH\|UT-LOOKUP-FILE\|UT-BEFORE\)./ d' )
