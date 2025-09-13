@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Synopsis:
 # Test the test runner Docker image by running it against a predefined set of 
