@@ -2,4 +2,4 @@ TESTSUITE 'Testsuite example-premature-termination'
 
 TestCase "sucess 1"
         PERFORM DO-SOMETHING
-	EXPECT WS-RESULT = "TRUE"
+        EXPECT WS-RESULT = "TRUE"
