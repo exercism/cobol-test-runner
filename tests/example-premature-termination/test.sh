@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/
-SLUG=$(basename "${SCRIPT_DIR}")
-COBOLCHECK=./bin/cobolcheck
+full_path=$(readlink -e "${BASH_SOURCE[0]}" )
+script_dir=${full_path%/*}
+slug=${script_dir##*/}
 
-WHICH_COBOLCHECK=$(which cobolcheck)
-if [[ $? -eq 0 ]] ; then
-    echo "Found cobolcheck, using $COBOLCHECK"
-    COBOLCHECK=$WHICH_COBOLCHECK
-elif [ ! -f $SCRIPT_DIR/bin/cobolcheck ]; then
-    echo "Cobolcheck not found, try to fetch it."
-    cd $SCRIPT_DIR/bin/
-    ./fetch-cobolcheck
+if cobolcheck_type=$(type cobolcheck); then
+    echo "Found cobolcheck, ${cobolcheck_type}"
+    COBOLCHECK=cobolcheck
+elif [[ ! -x $SCRIPT_DIR/bin/cobolcheck ]]; then
+    echo "cobolcheck not found, try to fetch it."
+    ./bin/fetch-cobolcheck
 fi
-cd $SCRIPT_DIR
-$COBOLCHECK -p $SLUG
+
+cd $script_dir
+"${COBOLCHECK}" -p "${slug}"
 
 # compile and run
 echo "COMPILE AND RUN TEST"
