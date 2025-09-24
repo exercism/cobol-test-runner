@@ -55,7 +55,7 @@ else
         sanitized_test_output=$(printf "${test_output}" | sed '1,/^COMPILE AND RUN TEST$/d' | sed '/warning: ignoring redundant \. \[-Wothers\]/ d' | sed '/test.cob: in paragraph .\(UT-BEFORE-EACH\|UT-AFTER-EACH\|UT-LOOKUP-FILE\|UT-BEFORE\)./ d' )
     else
         sanitized_test_output="${test_output} $(printf " \nSOMETHING WENT WRONG DURING TEST SETUP, PLEASE OPEN A TICKET AT: https://github.com/exercism/cobol/issues/new")"
-    jq -n --arg output "${sanitized_test_output}" '{version: 1, status: "fail", message: $output}' > ${results_file}
+    jq -n --arg output "${sanitized_test_output}" '{version: 1, status: "fail", message: $output}' > "${results_file}"
         
     fi
 
