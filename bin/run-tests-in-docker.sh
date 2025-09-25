@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Synopsis:
 # Test the test runner Docker image by running it against a predefined set of 
@@ -13,7 +13,7 @@
 # ./bin/run-tests-in-docker.sh
 
 # Build the Docker image
-docker build --rm -t exercism/test-runner .
+docker build --rm --network=host -t exercism/test-runner .
 
 # Run the Docker image using the settings mimicking the production environment
 docker run \

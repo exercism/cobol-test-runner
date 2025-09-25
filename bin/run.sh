@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Synopsis:
 # Run the test runner on a solution.
@@ -39,7 +39,13 @@ test_output=$(bash ${solution_dir}/test.sh ${slug} 2>&1)
 # Write the results.json file based on the exit code of the command that was 
 # just executed that tested the implementation file
 if [ $? -eq 0 ]; then
-    jq -n '{version: 1, status: "pass"}' > ${results_file}
+    if echo "$test_output" | tail -4 | grep -qPz '^ *[[:digit:]]+ TEST CASES WERE EXECUTED\n *[[:digit:]]+ PASSED\n *[[:digit:]]+ FAILED\n={49}'; then
+        jq -n '{version: 1, status: "pass"}' > "${results_file}"
+    else
+        sanitized_test_output=$(printf "%s\n" "${test_output}" | sed '1,/^COMPILE AND RUN TEST$/d; /warning: ignoring redundant \. \[-Wothers\]/ d;  /test.cob: in paragraph .\(UT-BEFORE-EACH\|UT-AFTER-EACH\|UT-LOOKUP-FILE\|UT-BEFORE\)./ d' )
+        printf -v sanitized_test_output "%s\nSOME TESTS WERE NOT PERFORMED. A PARAGRAPH BEING TESTED MUST HAVE FORCED THE PROGRAM EXECUTION TO TERMINATE (E.G. USING STOP RUN, GOBACK, ETC.)" "${sanitized_test_outputtest}"
+        jq -n --arg output "${sanitized_test_output}" '{version: 1, status: "fail", message: $output}' > "${results_file}"
+    fi
 else
     # OPTIONAL: Sanitize the output
     # In some cases, the test output might be overly verbose, in which case stripping
@@ -49,6 +55,8 @@ else
         sanitized_test_output=$(printf "${test_output}" | sed '1,/^COMPILE AND RUN TEST$/d' | sed '/warning: ignoring redundant \. \[-Wothers\]/ d' | sed '/test.cob: in paragraph .\(UT-BEFORE-EACH\|UT-AFTER-EACH\|UT-LOOKUP-FILE\|UT-BEFORE\)./ d' )
     else
         sanitized_test_output="${test_output} $(printf " \nSOMETHING WENT WRONG DURING TEST SETUP, PLEASE OPEN A TICKET AT: https://github.com/exercism/cobol/issues/new")"
+    jq -n --arg output "${sanitized_test_output}" '{version: 1, status: "fail", message: $output}' > "${results_file}"
+        
     fi
 
     # OPTIONAL: Manually add colors to the output to help scanning the output for errors
