@@ -1,4 +1,4 @@
-FROM ubuntu:24.04@sha256:534baea6a22c03a63003dbc8dbe78fe34bc0d7e595d9a9dc9834884ff530eb55 AS base
+FROM ubuntu:26.04@sha256:f144425ff09be612d6d9ad965196e9cdc23dae1f42110a8a11a3e9a8198759f7 AS base
 
 # Update the OS, fetch build requirements.
 RUN apt-get update && \
@@ -20,8 +20,11 @@ COPY --from=download /bin/cobolcheck /bin/cobolcheck
 # Build gnucobol
 WORKDIR /tmp/gnucobol_build
 ENV COB_LD_FLAGS='-Wl, --no-as-needed'
+
 RUN curl -sLk https://sourceforge.net/projects/open-cobol/files/gnu-cobol/3.2/gnucobol-3.2.tar.gz | tar xz && \
-    cd gnucobol-3.2 && ./configure --prefix=/usr && make && make install && ldconfig && \
+    cd gnucobol-3.2 && \
+    ./configure --prefix=/usr CFLAGS="-O2 -pipe -finline-functions -fsigned-char -Wno-error=incompatible-pointer-types" && \
+    make && make install && ldconfig && \
     cd /tmp/ && rm -rf /tmp/gnucobol_build
 
 # Set up the test runner environment.
