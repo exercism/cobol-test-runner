@@ -26,7 +26,6 @@ RUN curl -sLk https://sourceforge.net/projects/open-cobol/files/gnu-cobol/3.2/gn
     ./configure --prefix=/usr CFLAGS="-O2 -pipe -finline-functions -fsigned-char -std=gnu17 -Wno-error=incompatible-pointer-types" && \
     make && make install && ldconfig && \
     cd /tmp/ && rm -rf /tmp/gnucobol_build
-    
 # Set up the test runner environment.
 WORKDIR /opt/test-runner
 COPY . .
