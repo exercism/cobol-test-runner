@@ -20,6 +20,7 @@ COPY --from=download /bin/cobolcheck /bin/cobolcheck
 # Build gnucobol
 WORKDIR /tmp/gnucobol_build
 ENV COB_LD_FLAGS='-Wl, --no-as-needed'
+
 # GnuCOBOL 3.2 has pointer-type mismatches that GCC 14+ treats as errors; demote them to warnings.
 RUN curl -sLk https://sourceforge.net/projects/open-cobol/files/gnu-cobol/3.2/gnucobol-3.2.tar.gz | tar xz && \
     cd gnucobol-3.2 && \
