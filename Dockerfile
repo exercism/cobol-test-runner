@@ -20,8 +20,11 @@ COPY --from=download /bin/cobolcheck /bin/cobolcheck
 # Build gnucobol
 WORKDIR /tmp/gnucobol_build
 ENV COB_LD_FLAGS='-Wl, --no-as-needed'
+
 RUN curl -sLk https://sourceforge.net/projects/open-cobol/files/gnu-cobol/3.2/gnucobol-3.2.tar.gz | tar xz && \
-    cd gnucobol-3.2 && ./configure --prefix=/usr && make && make install && ldconfig && \
+    cd gnucobol-3.2 && \
+    ./configure --prefix=/usr CFLAGS="-O2 -pipe -finline-functions -fsigned-char -Wno-error=incompatible-pointer-types" && \
+    make && make install && ldconfig && \
     cd /tmp/ && rm -rf /tmp/gnucobol_build
 
 # Set up the test runner environment.
